@@ -2,58 +2,70 @@ import React from "react";
 import Notification from "./Notification";
 
 const reserveNotifications = [
-	{
-		message: "Good morning",
-	},
-	{
-		message: "Good afternoon",
-	},
-	{
-		message: "Good evening",
-	},
-]
+  {
+    id: 1,
+    message: "Good morning",
+  },
+  {
+    id: 2,
+    message: "Good afternoon",
+  },
+  {
+    id: 3,
+    message: "Good evening",
+  },
+];
 
 let timer;
 
 class NotificationList extends React.Component {
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
 
-		this.state = {
-			notifications: [],
-		};
-	}
-	
-	componentDidMount() {
-		const { notifications } = this.state;
-		timer = setInterval(() => {
-			if (notifications.length < reserveNotifications.length) {
-				const index = notifications.length;
-				notifications.push(reserveNotifications[index]);
-				this.setState({
-					notifications: notifications,
-				})
-			} else {
-				clearInterval(timer);
-			}
-		}, 1000)
-	}
+    this.state = {
+      notifications: [],
+    };
+  }
 
-	componentWillUnmount() {
-		if (timer) {
-			clearInterval(timer);
-		}
-	}
+  componentDidMount() {
+    const { notifications } = this.state;
+    timer = setInterval(() => {
+      if (notifications.length < reserveNotifications.length) {
+        const index = notifications.length;
+        notifications.push(reserveNotifications[index]);
+        this.setState({
+          notifications: notifications,
+        });
+      } else {
+        this.setState({
+          notifications: [],
+        });
+        clearInterval(timer);
+      }
+    }, 1000);
+  }
 
-	render() {
-		return (
-			<div>
-				{this.state.notifications.map((notification) => {
-					return <Notification message={notification.message} />
-				})}
-			</div>
-		)
-	}
+  componentWillUnmount() {
+    if (timer) {
+      clearInterval(timer);
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        {this.state.notifications.map((notification) => {
+          return (
+            <Notification
+              key={notification.id}
+              id={notification.id}
+              message={notification.message}
+            />
+          );
+        })}
+      </div>
+    );
+  }
 }
 
 export default NotificationList;
