@@ -43,8 +43,8 @@ const Comment = (props) => {
 			</div>
 
 			<div style={styles.contentContainer}>
-				<span style={styles.nameText}>joonhan</span>
-				<span style={styles.commentText}>This is my component</span>
+				<span style={styles.nameText}>{props.name}</span>
+				<span style={styles.commentText}>{props.comment}</span>
 			</div>
 		</div>
 	)
